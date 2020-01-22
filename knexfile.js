@@ -1,25 +1,26 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
-    client: 'sqlite3',
-    useNullAsDefault: true, // needed for sqlite
+    client: "pg",
     connection: {
-      filename: './data/schemes.db3',
+      database: "joins",
+      user: "postgres",
+      password: "password",
+      host: "127.0.0.1"
     },
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations"
     },
     seeds: {
-      directory: './data/seeds'
+      directory: "./data/seeds"
     },
     // add the following
     pool: {
       afterCreate: (conn, done) => {
         // runs after a connection is made to the sqlite engine
-        conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
-      },
-    },
-  }, 
+        conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
+      }
+    }
+  }
 };
