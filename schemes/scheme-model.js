@@ -19,6 +19,7 @@ function findById(id) {
     .first();
 }
 
+//not working
 function findSteps(id) {
   return db("steps as s")
     .join("schemes as sch", "sch.id", "s.scheme_id")
@@ -35,11 +36,14 @@ function add(scheme) {
     });
 }
 
-//not working
-function update(id, changes) {
+function update(changes, id) {
   return db("schemes")
+    .returning("id")
     .where({ id })
-    .update(changes);
+    .update(changes)
+    .then(ids => {
+      return findById(ids[0]);
+    });
 }
 
 function remove(id) {
